@@ -14,4 +14,18 @@ router.get('/', async (req, res) => {
   }
 });
 
+// POST /api/juegos - Agregar un nuevo juego [cite: 53]
+router.post('/', async (req, res) => {
+  try {
+    const nuevoJuego = new Juego(req.body);
+    const juegoGuardado = await nuevoJuego.save(); 
+
+    // Respuesta exitosa (código 201: Creado)
+    res.status(201).json(juegoGuardado); 
+  } catch (error) {
+    // Manejo de errores de validación (e.g., campo requerido faltante)
+    res.status(400).json({ message: 'Error al agregar el juego: ' + error.message });
+  }
+});
+
 module.exports = router;
