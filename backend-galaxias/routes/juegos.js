@@ -28,4 +28,37 @@ router.post('/', async (req, res) => {
   }
 });
 
+// PUT /api/juegos/:id - Editar un juego [cite: 53]
+router.put('/:id', async (req, res) => {
+  try {
+    const juegoEditado = await Juego.findByIdAndUpdate(
+      req.params.id, // ID del juego a editar (viene de la URL)
+      req.body,      // Datos a actualizar (viene del cuerpo)
+      { new: true, runValidators: true } // Opciones: devuelve el objeto actualizado y valida
+    );
+
+    if (!juegoEditado) {
+      return res.status(404).json({ message: 'Juego no encontrado en la base estelar.' });
+    }
+    res.status(200).json(juegoEditado);
+  } catch (error) {
+    res.status(400).json({ message: 'Error al editar el juego: ' + error.message });
+  }
+});
+
+// DELETE /api/juegos/:id - Eliminar un juego [cite: 53]
+router.delete('/:id', async (req, res) => {
+  try {
+    const resultado = await Juego.findByIdAndDelete(req.params.id);
+
+    if (!resultado) {
+      return res.status(404).json({ message: 'Juego no encontrado para eliminar.' });
+    }
+    res.status(200).json({ message: 'Juego eliminado con éxito.' });
+  } catch (error) {
+    res.status(500).json({ message: 'Error al eliminar el juego: ' + error.message });
+  }
+});
+
+
 module.exports = router;
