@@ -12,9 +12,11 @@ app.use(express.json());
 
 // 4. Importar Rutas
 const juegosRouter = require('./routes/juegos');
+const reseñasRouter = require('./routes/reseñas'); 
 
-// 5. Definir la URL base para las rutas de juegos (Endpoint principal)
+// 5. Definir la URL base para las rutas
 app.use('/api/juegos', juegosRouter); 
+app.use('/api/reseñas', reseñasRouter); 
 
 
 // --- CONEXIÓN A MONGOOSE ---
